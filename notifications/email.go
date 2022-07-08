@@ -6,6 +6,8 @@ import (
 	"os"
 )
 
+// SendEmailNotification sends an email notification
+// to an admin. It will do nothin if emails are not enabled in .env.
 func SendEmailNotification(url string, body string) {
 
 	if os.Getenv("EMAILS_ENABLED") == "" {

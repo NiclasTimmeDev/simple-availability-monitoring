@@ -12,7 +12,11 @@ import (
 	"uptime/utils"
 )
 
-func sendRequest(url string, route config.Route) {
+// SendMonitoringRequest sends request to a configured route from config.yml
+// and sends error notifications to the admin if errors occur during
+// the request.
+func SendMonitoringRequest(baseUrl string, route config.Route){
+	url := utils.CreateFullUrl(baseUrl, route.Path)
 	client := httpClient.NewHttpClient()
 
 	req, err := http.NewRequest(route.Method, url, nil)
@@ -44,11 +48,8 @@ func sendRequest(url string, route config.Route) {
 	fmt.Println(colors.ColorGreen, successMessage, colors.ColorReset)
 }
 
-func SendMonitoringRequest(baseUrl string, route config.Route){
-	fullUrl := utils.CreateFullUrl(baseUrl, route.Path)
-	sendRequest(fullUrl, route)
-}
-
+// notifyViaAllChannels sends notifications to the admin
+// via all notification channels (e.g., email and slack).
 func notifyViaAllChannels(url string, message string){
 	notifications.SendEmailNotification(url, message)
 	notifications.SendSlackNotification(message)

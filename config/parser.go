@@ -8,7 +8,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-
+// GetConfigGile parses the content from the yaml configuration file.
 func (c *Conf) GetConfigFile(file string) *Conf {
 	yamlFile, err := ioutil.ReadFile(file)
     if err != nil {
