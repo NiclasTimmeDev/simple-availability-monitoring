@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 	"strconv"
 	"uptime/colors"
 	"uptime/config"
@@ -18,10 +17,13 @@ func sendRequest(url string, route config.Route) {
 
 	req, err := http.NewRequest(route.Method, url, nil)
 	if err != nil {
+		message :=  fmt.Sprintf("Error while monitoring %s.\nError: %s", url, err.Error())
+		notifyViaAllChannels(url, message)
 		log.Fatal(err)
 	}
 
 	if route.Headers != nil {
+		
 		AddRequestHeaders(req, route)
 	}
 
@@ -32,15 +34,9 @@ func sendRequest(url string, route config.Route) {
 
 	statusCode := res.StatusCode
 	if statusCode != 200 {
-		errorMsg := fmt.Sprintf("Error: %s. Status code: %s", url, strconv.Itoa(statusCode))
+		errorMsg := fmt.Sprintf("Error while monitoring: %s.\nStatus code: %s", url, strconv.Itoa(statusCode))
 		fmt.Println(colors.ColorRed, errorMsg, colors.ColorReset)
-		if os.Getenv("EMAILS_ENABLED") != "" {
-			notifications.SendEmailNotification(url, statusCode)
-		}
-		if os.Getenv("SLACK_ENABLED") != "" {
-			slackErrorMsg := fmt.Sprintf("Error while monitoring %s.  Status code: %s", url, strconv.Itoa(statusCode))
-			notifications.SendSlackNotification(slackErrorMsg)
-		}
+		notifyViaAllChannels(url, errorMsg)
 		return
 	}
 
@@ -51,4 +47,9 @@ func sendRequest(url string, route config.Route) {
 func SendMonitoringRequest(baseUrl string, route config.Route){
 	fullUrl := utils.CreateFullUrl(baseUrl, route.Path)
 	sendRequest(fullUrl, route)
+}
+
+func notifyViaAllChannels(url string, message string){
+	notifications.SendEmailNotification(url, message)
+	notifications.SendSlackNotification(message)
 }

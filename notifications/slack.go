@@ -17,6 +17,10 @@ type SlackRequestBody struct {
 // some text and the slack channel is saved within Slack.
 func SendSlackNotification(msg string) error {
 
+    if os.Getenv("SLACK_ENABLED") == "" {
+        return nil
+    }
+
 	webhookUrl := os.Getenv("SLACK_WEBHOOK_URL")
     slackBody, _ := json.Marshal(SlackRequestBody{Text: msg})
     req, err := http.NewRequest(http.MethodPost, webhookUrl, bytes.NewBuffer(slackBody))

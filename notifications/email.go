@@ -4,10 +4,13 @@ import (
 	"fmt"
 	"net/smtp"
 	"os"
-	"strconv"
 )
 
-func SendEmailNotification(url string, statusCode int){
+func SendEmailNotification(url string, body string) {
+
+	if os.Getenv("EMAILS_ENABLED") == "" {
+		return
+	}
 	
 	// For authentication.
 	host := os.Getenv("MAIL_HOST")
@@ -20,7 +23,6 @@ func SendEmailNotification(url string, statusCode int){
 	from := os.Getenv("MAIL_FROM_ADDRESS")
 	to := os.Getenv("MAIL_TO_ADDRESS")
 	subject := fmt.Sprintf("Subject: Monitoring - Error while checking %s\n\n", url)
-	body := fmt.Sprintf("We encountered an error while monitoring your website.\nURL: %s\nStatus code: %s", url, strconv.Itoa(statusCode))
 	msg := []byte(subject + body)
 
 	auth := smtp.PlainAuth("", user, password, host)
