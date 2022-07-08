@@ -1,0 +1,24 @@
+destinations:
+  # Website 1
+  - baseUrl:
+    routes: https://google.com
+      - path: /
+        method: GET
+      - path: /preferences
+        method: 
+  # Website 2
+  - baseUrl:
+    routes:
+      - path:
+        method:
+        headers:
+          -
+      - path:
+        method:
+  # Website 3
+  - baseUrl:
+    routes:
+      - path:
+        method:
+        headers:
+          -
