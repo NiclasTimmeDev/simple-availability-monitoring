@@ -30,7 +30,7 @@ var allowedHttpMethods = []string{
 func SendMonitoringRequest(baseUrl string, route config.Route){
 
 	// Verify that the request method is valid.
-	isRequestMethodValid := utils.StringSliceContains(allowedHttpMethods, route.Method)
+	isRequestMethodValid := utils.Contains(allowedHttpMethods, route.Method)
 	
 	url := utils.CreateFullUrl(baseUrl, route.Path)
 	
