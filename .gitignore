@@ -25,3 +25,7 @@ go.work
 
 # Exclude testing configuration that is only used during development.
 config.test.yml
+config.dev.yml
+
+# Dev env
+/.vscode

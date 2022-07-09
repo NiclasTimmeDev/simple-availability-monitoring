@@ -60,9 +60,3 @@ To ebable email support, make `EMAILS_ENABLED=true` in the `.env`.
 ### Slack
 
 You can also be notified via Slack if you want. To enable this, populate the `SLACK_WEBHOOK_URL` in `.env` and set `SLACK_ENABLED=true`. For a tutorial on how to create Slack Webhooks go [here](https://api.slack.com/messaging/webhooks).
-
-## To-Dos
-
-- Make status code configurable: At the moment, an error will be sent whenever the response status code is not 200. It would be better, however, if this was only the default behaviour and would be configurable in the config file.
-- Validate request method. At the moment, if is not checked if the `method` propery in `routes` is actually a valid HTTP method.
-- Inline documentation.

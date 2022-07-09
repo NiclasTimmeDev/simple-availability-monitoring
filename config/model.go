@@ -8,6 +8,7 @@ type Route struct {
 	Path string `yaml:"path"`
 	Method string `yaml:"method"`
 	Headers []string `yaml:"headers"`
+	ExpectedStatusCode int `yaml:"expectedStatusCode"`
 }
 
 type Destination struct {

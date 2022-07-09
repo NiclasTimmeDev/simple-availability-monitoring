@@ -5,7 +5,8 @@ destinations:
       - path: /
         method: GET
       - path: /preferences
-        method: 
+        method:
+        expectedStatusCode:
   # Website 2
   - baseUrl:
     routes:
@@ -15,10 +16,12 @@ destinations:
           -
       - path:
         method:
+        expectedStatusCode:
   # Website 3
   - baseUrl:
     routes:
       - path:
         method:
+        expectedStatusCode:
         headers:
           -
